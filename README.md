@@ -1,16 +1,15 @@
 # umMDR
------A unified model based MDR framework for detecting gene-gene interaction
+A unified model based MDR framework for detecting gene-gene interaction
 
 
-Two step
-1.assign high/low status (S) for each genotype combination (cell) by traditional mdr approaches
-2.modeling: use glm, and use ridge regression to account for marginal effects
+## Description:
+ A two-step unified model based MDR approach (UM-MDR), in which, the significance of a multi-locus model, even a high-order model, can be easily obtained through a regression framework, and a semiparametric correction procedure is designed for control type I error rates
 
 
 Key idea: assume the null distributioin is non-central chisquare for testing association between phenotype and S;
 the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
 
-## Install and Usage
+## Installation and Usage
 * Download the package MaxmzpAUC_0.1.tar.gz
 * In R, 
   * To install: 
