@@ -11,8 +11,23 @@ Key idea: assume the null distributioin is non-central chisquare for testing ass
 the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
 
 ## Install and Usage
-
-
+* Download the package MaxmzpAUC_0.1.tar.gz
+* In R, 
+  * To install: 
+  ```
+   install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
+   
+  ```
+  
+  * To use: 
+  ```
+   library(umMDR)
+    help(umMDR)
+    
+  ```
+  
+## Citation
+A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions
 ## Notice
 gene_simu_nLD.R --- generate simulation data under 70 penetrance models and no LD
 
