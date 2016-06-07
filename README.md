@@ -28,7 +28,7 @@ the non-cetral parameter is estimated through a small number of permulation (say
 ## Citation
 Yu, Wenbao and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", submitted, 2016
 
-## Others
+## Other Sources
 source codes for implementing the numeric study in the manuscript:
 gene_simu_nLD.R --- generate simulation data under 70 penetrance models and no LD
 
