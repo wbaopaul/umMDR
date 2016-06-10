@@ -10,6 +10,47 @@ library(MASS)
 
 ##------------------------------------------------------------------------##
 ## list functions
+## calculating t score
+cal_tstat <- function(ids, high.all, S){
+  high.ids = intersect(ids, high.all)
+  low.ids = setdiff(ids, high.ids)
+
+  s1 = S[high.ids]
+
+  s2 = S[low.ids]
+
+  if(length(high.ids) == 0 || length(low.ids) == 0) return(0)
+  stat = t.test(s1, y = s2, var.equal = TRUE)$statistic
+
+  return(abs(stat))
+}
+cal_tstat = cmpfun(cal_tstat)
+
+## calculating ht2 score
+cal_ht2 <- function(ids, high.all, phes){
+
+  high.ids = intersect(ids, high.all)
+  low.ids = setdiff(ids, high.ids)
+  d = ncol(phes)
+
+  s1 = phes[high.ids, ]
+
+  s2 = phes[low.ids, ]
+
+  if(length(high.ids) == 0 || length(low.ids) == 0) return(0)
+
+  s1 = as.matrix(s1)
+  s2 = as.matrix(s2)
+
+  if(ncol(s1) == 1) s1 = t(s1)
+  if(ncol(s2) == 1) s2 = t(s2)
+
+
+  stat = dire_ht2(s1, s2, phes)$fstat                   ## another version
+  ## stat is scaled that it follows a F distribution with degree d, n-1-d under the null
+  return(stat)
+}
+
 
 ## calculate training score for a given train samples id and
 ## snp.dat, n by k, -- k column correspond to the specific k-snps
@@ -62,6 +103,7 @@ qmdr <- function(train.ids, test.ids, snp.dat, S, phes, test.type = 'ht2'){
   return(list('train.stat' = train.stat, 'test.stat' = test.stat ))
 }
 qmdr = cmpfun(qmdr)
+
 
 mdr <- function(train.ids, test.ids, snp.dat, HL){
   snp.dat = as.matrix(snp.dat)
@@ -125,26 +167,13 @@ mdr <- function(train.ids, test.ids, snp.dat, HL){
 }
 mdr = cmpfun(mdr)
 
-## calculating t score
-cal_tstat <- function(ids, high.all, S){
-  high.ids = intersect(ids, high.all)
-  low.ids = setdiff(ids, high.ids)
-
-  s1 = S[high.ids]
-
-  s2 = S[low.ids]
-
-  if(length(high.ids) == 0 || length(low.ids) == 0) return(0)
-  stat = t.test(s1, y = s2, var.equal = TRUE)$statistic
-
-  return(abs(stat))
-}
-cal_tstat = cmpfun(cal_tstat)
 
 ## choose the best k-way interaction by cross validation
 ## return the snp combination and its test score
 ## snp.combs includes a possible k-way snps combinations in each column
 ## using cv consistency or testing score to decide best model
+## S -- summary score (for multi-MDR)
+## phes -- all phenotypes
 CV_QMDR <- function(folds = 10, snp.all, S, phes,
                              test.type = 'ht2', sele.type = 'cvc', snp.combs){
   ns = ncol(snp.combs)
@@ -249,6 +278,7 @@ CV_MDR <- function(folds = 10, snp.all, snp.combs, sele.type = 'cvc', HL){
 }
 CV_MDR = cmpfun(CV_MDR)
 
+
 kway_QMDR <- function(phe, K, snp.mats, test.type = 't', sele.type = 'cvc'){
 
   #set.seed(1)
@@ -278,12 +308,14 @@ kway_QMDR <- function(phe, K, snp.mats, test.type = 't', sele.type = 'cvc'){
 }
 kway_QMDR = cmpfun(kway_QMDR)
 
+
 ## for mdr
-kway_MDR <- function(method, SS, cova, K, snp.mats, sele.type = 'cvc'){
+kway_MDR <- function(SS, K, snp.mats, sele.type = 'cvc'){
 
   gm = mean(SS)
-  HL = ifelse(SS > gm, 1, 0)   ## change phenotypes into two groups
+  HL = ifelse(SS > gm, 1, 0)   ## change phenotypes into two groups (for gmdr)
 
+  if(length(unique(SS)) == 2) HL = SS
   #set.seed(1)
   n = length(SS)
   p = ncol(snp.mats)

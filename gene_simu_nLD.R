@@ -5,7 +5,9 @@
 ##----------------------------------------------------------------##
 
 require(MASS)
-library(compiler)
+require(compiler)
+
+## -- part1: functions to generate simulation 2-way interaction data -- ####
 
 ## Generate genotype of a single SNP with fixed MAF
 simu_sSNP_genotype <- function(n, p){
@@ -113,7 +115,8 @@ simu_popu <- function(N, M1 = 2, M0 = 0, p.f1, p.f0, pen1, mu1, trait.type = 'qu
 }
 simu_popu = cmpfun(simu_popu)
 
-## penetrace function for 70 models ####
+
+## penetrace function of 70 models for 2-way interactions ####
 pen <- c ()
 pen <- c (pen, 0.486, 0.960, 0.538, 0.947, 0.004, 0.811, 0.640, 0.606, 0.909 )
 pen <- c (pen, 0.469, 0.956, 0.697, 0.945, 0.019, 0.585, 0.786, 0.407, 0.013 )
@@ -198,31 +201,112 @@ dim(pen) = c(9, 70)
 # ================================================================================= #
 
 
-#  An: Example for first 2-locus interaction causal model    ####
-# ================================================================================= #
+## -- part2: function to generate 3-way interactions --  ####
+
+## calculate penatrace function
+cal_penf3 <- function(mu1 = 0.5){
+  pen = rep(0, 27)
+  ids =c(9, 15, 17, 21, 23, 25)
+  pen[ids] = mu1
+  return(pen)
+}
+cal_penf3 = cmpfun(cal_penf3)
 
 
-#R CMD BATCH '--args arg_1 arg_2 arg_3 arg_4 arg_5 arg_6' ex_script.R result.Rout
-#args = (commandArgs(TRUE))
-#model.no = as.numeric(args[1])
-#mu1 = as.numeric(args[2])
-#rho = as.numeric(args[3])
-#k = as.numeric(args[4])
-#seed = as.numeric(args[5]) + model.no * 1000
-#outfile = args[6]
+## Generate phenotype data via penetrance function of M-locus model
+simu_trait3 <- function(dG, pen1, trait.type = 'quantitative'){
+  ## dG: genotypes of causal SNPs  (col=SNP, row=individual)
+  ## pen: penetrance function
+  n <- nrow(dG)
+  M <- ncol(dG)
+
+  geno <- rep(1,n)
+
+  for(j in 1:M) {
+    geno <- geno + dG[, j] * (3^(j-1))  # geno with be range from 1 to 27
+  } ## geno[j] = 3 means the j-th observation locates in the 3-rd cell
 
 
-#M1 = 2           # Number of causal SNPs with fixed MAFs, fisrt M1 as causeal
-#M0 = 18          # Number of non-causal SNPs
+  y0 <- NULL
+  pens = pen1[geno]
 
-#cov_mean = 0
-#cov_var = 0
+  if(trait.type == 'binary'){
+    for(i in 1:n) y0 <- rbind(y0, rbinom(1, 1, pens[i]))
+  }else{
+    for(i in 1:n) y0 <- rbind(y0, rnorm(1, pens[i], 1))
+  }
 
-#pen1 <- pen[, model.no]   ## input model.no
+  return(y0)
+}
+simu_trait3 = cmpfun(simu_trait3)
 
-#maf = MAF[model.no]
-#MAF1 <- rep(maf, M1)
-#MAF0 <- maf
+
+## Generate a population data
+simu_popu3 <- function(N, M1 = 3, M0 = 0, p.f1, p.f0, mu1 = 0.5, trait.type = 'quantitative'){
+  ## N: population size
+  ## M1: number of causal SNPs
+  ## M0: number of non-causal SNPs
+  ## p.f1: fixed MAF of causal SNPs
+  ## p.f0: fixed MAF of non-causal SNPs
+  ## pen1: penetrance function being used
+  ## rslt$data: (col1:ID, col2:Trait, other cols:SNPs)
+
+  #z <- rnorm(N, cov_mean, sqrt(cov_var))  ## covariates
+  z <- 0;
+
+  ## Causal SNP genotype generation
+  dGen1 <- matrix(rep(0, N * M1), nrow = N, ncol = M1)
+  dP1 <- rep(0, M1)
+  for(i in 1:M1){
+    res <- simu_sSNP_genotype(n = N, p = p.f1[i])
+    dGen1[, i] <- res[1:N]
+    dP1[i] <- res[(N+1)]  ## MAF
+
+  }
+
+  ## Non-causal SNP genotype generation
+  dGen0 = NULL
+  if(M0 > 0){
+    dGen0 <- matrix(rep(0, N * M0), nrow = N, ncol = M0)
+    dP0 <- rep(0, M0)
+    for(i in 1:M0){
+      res <- simu_sSNP_genotype(n = N, p = p.f0)
+      dGen0[, i] <- res[1:N]
+      dP0[i] <- res[(N+1)]
+    }
+  }
+
+
+  snpnames <- c()
+  for (i in 1:(M1 + M0)){
+    snpnames <- c(snpnames, paste("S", i, sep=""))
+  }
+
+  ## get the penetrace function
+  pen1 = cal_penf3(mu1)
+
+  ## Trait generation
+  dTrt <- simu_trait3(dG = dGen1, pen = pen1, trait.type)
+
+  rslt <- list()
+  if(all(z == 0)){
+    # no covariate
+    rslt$data <- cbind(dTrt, dGen1, dGen0)
+    #colnames(rslt$data) = c("Y1","Y2", snpnames)
+    colnames(rslt$data) = c("Y", snpnames)
+  }else{
+    rslt$data <- cbind(dTrt, z, dGen1, dGen0) # col1:ID, col2:Trait, other cols:SNPs
+    #colnames(rslt$data) = c("Y1", "Y2", "Cov", snpnames)
+    colnames(rslt$data) = c("Y", "Cov", snpnames)
+  }
+
+  a <- cbind(dGen1, dGen0)
+  rslt$MAF <- (apply((a==1), 2, sum) + 2 * apply((a==2), 2, sum))/2/nrow(a)
+
+  return (rslt)
+}
+simu_popu3 = cmpfun(simu_popu3)
+
 
 
 
