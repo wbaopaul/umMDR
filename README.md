@@ -39,12 +39,10 @@ library(umMDR)
 help(umMDR)
 ```
 
----------   -----------------------------------
-Arguments   Description
----------   -----------------------------------
-snp.all	       snp matrix, n by p.
- 
-phe	           phenotype, n by d matrix, d>=1.
+snp.all	      
+ : snp matrix, n by p.
+phe	           
+ : phenotype, n by d matrix, d>=1.
 ---------   -----------------------------------
 
 
