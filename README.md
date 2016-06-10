@@ -39,12 +39,6 @@ library(umMDR)
 help(umMDR)
 ```
 
-snp.all	      
- : snp matrix, n by p.
-phe	           
- : phenotype, n by d matrix, d>=1.
----------   -----------------------------------
-
 
 ## Citation
 Yu, Wenbao and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", submitted, 2016
