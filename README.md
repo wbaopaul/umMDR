@@ -9,24 +9,34 @@ A unified model based MDR framework for detecting gene-gene interaction
 Key idea: assume the null distributioin is non-central chisquare for testing association between phenotype and S;
 the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
 
-## Installation and Usage
+## Installation
 * Download the package umMAD_0.1.tar.gz
-* In R, 
-  * To install: 
+* To install, in R type: 
   ```
    install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
    
   ```
-  
-  * To use: 
+## Usage 
+  ```
+  umMDR(snp.all, phe, K = 2, cova = NULL, classm = "mean",
+  adj.main = "FALSE", nperm = 5)
+  ```
+ 
+## Example 
   ```
    library(umMDR)
-    help(umMDR) 
     ## an example
     snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
     phe <- rnorm(100)  ## generate phenotype
     umMDR(snps, phe, 2)
   ```
+
+## More information of usage
+ 
+```
+library(umMDR)
+help(umMDR)
+```
 
 
 
