@@ -10,8 +10,8 @@ Key idea: assume the null distributioin is non-central chisquare for testing ass
 the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
 
 ## Installation
-* Download the package umMAD_0.1.tar.gz
-* To install, in R type: 
+* Download the package umMAD_0.1.tar.gz from this respository
+* To install, in R: 
   ```
    install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
    
