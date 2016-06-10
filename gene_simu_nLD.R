@@ -205,7 +205,7 @@ dim(pen) = c(9, 70)
 
 ## calculate penatrace function
 cal_penf3 <- function(mu1 = 0.5){
-  pen = rep(0, 27)
+  pen = rep(mu1/10, 27)
   ids =c(9, 15, 17, 21, 23, 25)
   pen[ids] = mu1
   return(pen)
