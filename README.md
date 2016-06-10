@@ -10,7 +10,7 @@ Key idea: assume the null distributioin is non-central chisquare for testing ass
 the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
 
 ## Installation and Usage
-* Download the package MaxmzpAUC_0.1.tar.gz
+* Download the package umMAD_0.1.tar.gz
 * In R, 
   * To install: 
   ```
@@ -28,14 +28,10 @@ the non-cetral parameter is estimated through a small number of permulation (say
 ## Citation
 Yu, Wenbao and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", submitted, 2016
 
-## Other Sources
-source codes for implementing the numeric study in the manuscript:
+## Other Sources for the manuscript
 
-gene_simu_nLD.R --- generate simulation data under 70 penetrance models and no LD
+gene_simu_nLD.R --- generate simulation data under 70 penetrace function and a 3-way interaction model
 
-gene_simu_3way.R --- generate 3 way interaction data under the model defined in the manuscript
+umMDR_simu.R --- run simulation Case1-case4
 
-umMDR_simu.R --- run simulation Case1-case3
-Case4_simu.R --- run simulation Case4
-
-M_QMDR.R --- run MDR, QMDR or M-QMDR as a comparison
+M_QMDR.R --- run MDR, QMDR or Multi-QMDR as a comparison
