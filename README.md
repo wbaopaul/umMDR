@@ -39,4 +39,7 @@ gene_simu_nLD.R --- generate simulation data under 70 penetrace function and a 3
 
 umMDR_simu.R --- run simulation Case1-case4
 
+qqplot_simu --- generate qqplot in the manuscript
+
 M_QMDR.R --- run MDR, QMDR or Multi-QMDR as a comparison
+
