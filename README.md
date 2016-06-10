@@ -16,6 +16,7 @@ the non-cetral parameter is estimated through a small number of permulation (say
    install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
    
   ```
+ 
 ## Usage 
   ```
   umMDR(snp.all, phe, K = 2, cova = NULL, classm = "mean",
