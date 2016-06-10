@@ -21,10 +21,15 @@ the non-cetral parameter is estimated through a small number of permulation (say
   * To use: 
   ```
    library(umMDR)
-    help(umMDR)
-    
+    help(umMDR) 
+    ## an example
+    snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
+    phe <- rnorm(100)  ## generate phenotype
+    umMDR(snps, phe, 2)
   ```
-  
+
+
+
 ## Citation
 Yu, Wenbao and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", submitted, 2016
 
