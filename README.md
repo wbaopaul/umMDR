@@ -26,10 +26,10 @@ the non-cetral parameter is estimated through a small number of permulation (say
 ## Example 
   ```
    library(umMDR)
-    ## an example
-    snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
-    phe <- rnorm(100)  ## generate phenotype
-    umMDR(snps, phe, 2)
+   ## an example
+   snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
+   phe <- rnorm(100)  ## generate phenotype
+   umMDR(snps, phe, 2)
   ```
 
 ## More information of usage
