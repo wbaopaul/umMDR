@@ -6,9 +6,6 @@ A unified model based MDR framework for detecting gene-gene interaction
  A two-step unified model based MDR approach (UM-MDR), in which, the significance of a multi-locus model, even a high-order model, can be easily obtained through a regression framework, and a semiparametric correction procedure is designed for control type I error rates
 
 
-Key idea: assume the null distributioin is non-central chisquare for testing association between phenotype and S;
-the non-cetral parameter is estimated through a small number of permulation (say 5 or 10 times)
-
 ## Installation
 * Download the package umMAD_0.1.tar.gz from this respository
 * To install, in R: 
@@ -26,7 +23,6 @@ the non-cetral parameter is estimated through a small number of permulation (say
 ## Example 
   ```
    library(umMDR)
-   ## an example
    snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
    phe <- rnorm(100)  ## generate phenotype
    umMDR(snps, phe, 2)
