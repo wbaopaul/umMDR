@@ -1,9 +1,6 @@
 # generate many snps -phenotypes under null for drawing qqplot
 
-library(compiler)
-library(MASS)
-library(glmnet)
-source('umMDR_source.R')
+library(umMDR)
 source('gene_simu_nLD.R')
 
 ## simu.type should be simu0
