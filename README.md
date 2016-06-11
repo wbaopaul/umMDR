@@ -27,7 +27,7 @@ A unified model based MDR framework for detecting gene-gene interaction
  umMDR(snps, phe, 2)
  ```
 
-## More information of usage
+## More information about usage
  
 ```
 library(umMDR)
