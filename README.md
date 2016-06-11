@@ -9,24 +9,23 @@ A unified model based MDR framework for detecting gene-gene interaction
 ## Installation
 * Download the package umMAD_0.1.tar.gz from this respository
 * To install, in R: 
-  ```
-   install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
-   
-  ```
+ ```
+ install.packages("path/umMDR_0.1.tar.gz", repos = NULL, type = "source")
+ ```
  
 ## Usage 
-  ```
-  umMDR(snp.all, phe, K = 2, cova = NULL, classm = "mean",
-  adj.main = "FALSE", nperm = 5)
-  ```
+ ```
+ umMDR(snp.all, phe, K = 2, cova = NULL, classm = "mean",
+ adj.main = "FALSE", nperm = 5)
+ ```
  
 ## Example 
-  ```
-   library(umMDR)
-   snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
-   phe <- rnorm(100)  ## generate phenotype
-   umMDR(snps, phe, 2)
-  ```
+ ```
+ library(umMDR)
+ snps <- matrix(rbinom(100 * 5, 1, 0.2), nrow = 100)  ## generate 5 snps
+ phe <- rnorm(100)  ## generate phenotype
+ umMDR(snps, phe, 2)
+ ```
 
 ## More information of usage
  
