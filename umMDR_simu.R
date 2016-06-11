@@ -1,7 +1,7 @@
 library(umMDR)
 
-source('gene_simu_nLD.R')    ## generate data without LD, Case1-3
-source('M_QMDR.R')      ## for running MDR/QMDR
+source('gene_simu_nLD.R')    ## generate simulation data without LD
+source('M_QMDR.R')           ## for running MDR/QMDR
 
 
 
@@ -111,8 +111,6 @@ CalPower <- function(N, nsnp = 10,  cova = NULL, adj.main = FALSE, repts = 100, 
 
 
       if(simu.type == 'Case3') phe = as.matrix(phe + rnorm(N, marg.efsize * dat[, 4]))  ## s3 marginal
-      if(simu.type == 'Case5') phe = as.matrix(phe + rnorm(N, marg.efsize * dat[, 2]))  ## s1 marginal
-
 
       classm = 'mean'
       if(simu.type == 'Case1') classm = 'obs-ratio'
@@ -121,7 +119,7 @@ CalPower <- function(N, nsnp = 10,  cova = NULL, adj.main = FALSE, repts = 100, 
 
 
       pow[run] = ifelse(res$pvs[1] < alpha/ns, 1, 0)         ## power under bonferoni correction
-      pow.rank[run] = ifelse(which.min(res$pv) == 1, 1, 0) ## only care about pv rank
+      pow.rank[run] = ifelse(which.min(res$pvs) == 1, 1, 0) ## only care about pv rank
 
       pow.raw[run] = ifelse(res$raw.pvs[1] < alpha/ns, 1, 0)    ## power (without non-central correction) under bonferoni correction
 
@@ -189,9 +187,9 @@ CalPower_3way <- function(N, nsnp = 10,  cova = NULL, adj.main = TRUE, repts = 1
 
 
     pow[run] = ifelse(res$pvs[1] < 0.05/ns, 1, 0)         ## power under bonferoni correction
-    pow.rank[run] = ifelse(which.min(res$pv) == 1, 1, 0) ## only care about pv rank
+    pow.rank[run] = ifelse(which.min(res$pvs) == 1, 1, 0) ## only care about pv rank
 
-    pow.raw[run] = ifelse(res$raw.pv[1] < 0.05/ns, 1, 0)    ## power (without non-central correction) under bonferoni correction
+    pow.raw[run] = ifelse(res$raw.pvs[1] < 0.05/ns, 1, 0)    ## power (without non-central correction) under bonferoni correction
 
     # for mdr or qmdr
     if(classm == 'obs-ratio'){
