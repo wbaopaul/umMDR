@@ -40,7 +40,7 @@ Yu, Wenbao and Park, Taesung "A unified model based multifactor dimensionality r
 
 ## Other Sources for the manuscript
 
-gene_simu_nLD.R --- generate simulation data under 70 penetrace function and a 3-way interaction model
+gene_simu_nLD.R --- generate simulation data under 70 penetrance function and a 3-way interaction model
 
 umMDR_simu.R --- run simulation Case1-case4
 
