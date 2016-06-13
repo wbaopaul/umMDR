@@ -3,7 +3,7 @@ A unified model based MDR framework for detecting gene-gene interaction
 
 
 ## Description
- A two-step unified model based MDR approach (UM-MDR), in which, the significance of a multi-locus model, even a high-order model, can be easily obtained through a regression framework, and a semiparametric correction procedure is designed for control type I error rates
+ A two-step unified model based MDR approach (UM-MDR), in which, the significance of a multi-locus model, even a high-order model, can be easily obtained through a regression framework, and a semiparametric correction procedure is designed to control type I error rates
 
 
 ## Installation
