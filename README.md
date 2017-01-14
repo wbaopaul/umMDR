@@ -36,7 +36,7 @@ help(umMDR)
 
 
 ## Citation
-Yu, Wenbao, Lee, Seungyeoun and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", submitted, 2016
+Yu, Wenbao, Lee, Seungyeoun and Park, Taesung "A unified model based multifactor dimensionality reduction framework for detecting gene-gene interactions", Bioinformatics (2016) 32 (17): i605-i610.
 
 ## Other Sources for the manuscript
 
